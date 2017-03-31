@@ -37,7 +37,8 @@ class NewOctaveVersion extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com')
+        return $this
+                ->subject('New Octave Version')
                 ->view('emails.newVersion');
     }
 }

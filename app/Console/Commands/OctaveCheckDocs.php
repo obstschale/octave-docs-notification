@@ -65,7 +65,7 @@ class OctaveCheckDocs extends Command
                     $newVersion = Version::create(['version' => $text ]);
                     $output = '[new] ' . $output;
                     $this->info( $output );
-                    Mail::to('mail@hanshelgebuerger.de')->send(new NewOctaveVersion($newVersion));
+                    Mail::to(getenv('MAIL_TO_ADDRESS'))->send(new NewOctaveVersion($newVersion));
                     return;
                 }
 
