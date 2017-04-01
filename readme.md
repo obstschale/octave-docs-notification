@@ -1,20 +1,32 @@
-# Lumen PHP Framework
+# Octave Docs Notification
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+In my bachelors I used [Octave](https://www.gnu.org/software/octave) for several classes and I created a [Dash](https://kapeli.com/dash) docset so I can search through the documentation offline.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Now I don't use Octave anymore and I missed some updates and did not update the docset for those who actually use it. The generation of a new docset is done quickly but the keypoint is I really don't know when new versions come out.
+ 
+ The naive approach were to subscribe to their RSS feed. But that would mean, I have to look through them regularly to see if an update is published. I wanted something that notifies me. So I created this micro service.
+ 
+## What is this?
 
-## Official Documentation
+This is a simple micro service, which uses Lumen as Framework. A CLI Command fetches [this site](https://www.gnu.org/software/octave/doc/) and parses the HTML. Each version number is saved to a sqlite DB. If a version is found on the page but is not in the DB an eMail is send to me to notify me that a new version is found. A cronjob triggers this command daily.
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+![](screenshot.png)
 
-## Security Vulnerabilities
+## Installation
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+1. Clone the repo
+1. `$ composer install`
+1. Copy `.env.exmaple` to `.env` and fill out variables
+1. Create sqlite DB
+1. Test command:
+
+    `$ php artisan octave:check-docs`
+    
+1. Create (real) cronjob ([Laravel Docs](https://laravel.com/docs/5.4/scheduling)):
+
+    `* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1`
+
+1. Wait for new version.
 
 ## License
 
