@@ -54,7 +54,7 @@ class OctaveCheckDocs extends Command
         $this->info( 'Documentation for the following versions are available' );
         $crawler = $this->client->request('GET', $url );
 
-        $crawler->filter('td > a')->each(function ($node) use ($url) {
+        $crawler->filter('pre > a')->each(function ($node) use ($url) {
             if ( starts_with( $node->text(), 'v' ) ) {
                 $text = substr( $node->text(), 0, -1 );
                 $output = $text . ' (' . $url . $node->attr('href') . ')';
