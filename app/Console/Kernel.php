@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('octave:check-docs')->everyMinute();
-        // $schedule->command('octave:check-docs')->daily();
+        // $schedule->command('octave:check-docs')->everyMinute();
+        $schedule->command('octave:check-docs')->daily();
     }
 }
